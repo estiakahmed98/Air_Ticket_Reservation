@@ -12,7 +12,7 @@ const Footer = () => {
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
               <Plane className="h-8 w-8 text-blue-400" />
-              <span className="text-xl font-bold">Khyuran</span>
+              <span className="text-xl font-bold">Air Ticket Reservation</span>
             </div>
             <p className="text-gray-400">
               Your trusted travel partner for amazing adventures around the world.
@@ -58,7 +58,7 @@ const Footer = () => {
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center">
           <p className="text-gray-400">
-            © 2024 Khyuran. All rights reserved.
+            © 2024 Air Ticket Reservation. All rights reserved.
           </p>
         </div>
       </div>

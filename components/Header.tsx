@@ -15,7 +15,7 @@ const Header = () => {
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="flex items-center space-x-2">
             <Plane className="h-8 w-8 text-blue-600" />
-            <span className="text-xl font-bold text-gray-900">Khyuran</span>
+            <span className="text-xl font-bold text-gray-900">Air Ticket Reservation</span>
           </Link>
           
           <nav className="hidden md:flex space-x-8">

@@ -89,7 +89,7 @@ const LoginPage = () => {
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center space-x-2">
             <Plane className="h-8 w-8 text-blue-600" />
-            <span className="text-2xl font-bold text-gray-900">Khyuran</span>
+            <span className="text-2xl font-bold text-gray-900">Air Ticket Reservation</span>
           </Link>
           <p className="text-gray-600 mt-2">Welcome back to your travel companion</p>
         </div>
