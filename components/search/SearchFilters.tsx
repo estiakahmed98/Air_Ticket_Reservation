@@ -75,7 +75,7 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ onFilterChange }) => {
 
           <div>
             <h4 className="font-semibold mb-3">Airlines</h4>
-            {[...new Set(mockFlights.map((f) => f.airline))].map((airline) => (
+            {Array.from(new Set(mockFlights.map((f) => f.airline))).map((airline) => (
               <div key={airline} className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                   <Checkbox
