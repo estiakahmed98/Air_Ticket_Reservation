@@ -74,7 +74,7 @@ const SearchBar = () => {
             <span>One-Way</span>
           </label>
         </div>
-        
+
         <div className="flex items-center space-x-4">
           <Button
             variant={searchData.class === 'Economy' ? 'default' : 'outline'}
@@ -127,11 +127,15 @@ const SearchBar = () => {
           />
         </div>
 
-        <div className="space-y-2">
-          <Label>Departing</Label>
+        <div className="space-y-2 flex flex-col">
+          <Label htmlFor="departureDate" className="flex items-center space-x-1">
+            <CalendarIcon className="h-4 w-4" />
+            <span>Departing</span>
+          </Label>
           <Popover>
             <PopoverTrigger asChild>
               <Button
+                id="departureDate"
                 variant="outline"
                 className={cn(
                   "w-full justify-start text-left font-normal",
@@ -148,6 +152,7 @@ const SearchBar = () => {
                 selected={searchData.departureDate}
                 onSelect={(date) => setSearchData({ ...searchData, departureDate: date })}
                 initialFocus
+                fromDate={new Date()} // Disable past dates
               />
             </PopoverContent>
           </Popover>
@@ -175,6 +180,7 @@ const SearchBar = () => {
                   selected={searchData.returnDate}
                   onSelect={(date) => setSearchData({ ...searchData, returnDate: date })}
                   initialFocus
+                  fromDate={new Date()}
                 />
               </PopoverContent>
             </Popover>
@@ -240,7 +246,7 @@ const SearchBar = () => {
         </div>
       </div>
 
-      <Button 
+      <Button
         onClick={handleSearch}
         className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg font-semibold"
         size="lg"

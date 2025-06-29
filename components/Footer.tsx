@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Plane, Facebook, Twitter, Instagram, Youtube } from 'lucide-react';
+import { Plane, Facebook, Twitter, Instagram, Youtube, Linkedin, Github } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -18,10 +18,38 @@ const Footer = () => {
               Your trusted travel partner for amazing adventures around the world.
             </p>
             <div className="flex space-x-4">
-              <Facebook className="h-5 w-5 text-gray-400 hover:text-white cursor-pointer" />
-              <Twitter className="h-5 w-5 text-gray-400 hover:text-white cursor-pointer" />
-              <Instagram className="h-5 w-5 text-gray-400 hover:text-white cursor-pointer" />
-              <Youtube className="h-5 w-5 text-gray-400 hover:text-white cursor-pointer" />
+              <a
+                href="https://www.facebook.com/estiakahmed.tusher/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+              >
+                <Facebook className="h-5 w-5 text-gray-400 hover:text-white cursor-pointer" />
+              </a>
+              <a
+                href="https://x.com/EstiakA74501023"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Twitter"
+              >
+                <Twitter className="h-5 w-5 text-gray-400 hover:text-white cursor-pointer" />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/estiak-ahmed/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Linkedin"
+              >
+                <Linkedin className="h-5 w-5 text-gray-400 hover:text-white cursor-pointer" />
+              </a>
+              <a
+                href="https://github.com/estiakahmed98"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+              >
+                <Github className="h-5 w-5 text-gray-400 hover:text-white cursor-pointer" />
+              </a>
             </div>
           </div>
 

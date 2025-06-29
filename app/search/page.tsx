@@ -18,9 +18,14 @@ const SearchPage = () => {
   const searchParams = useSearchParams();
   const { user } = useAuth();
   const router = useRouter();
+  const [allFlights] = useState(mockFlights);
   const [flights, setFlights] = useState(mockFlights);
   const [sortBy, setSortBy] = useState<'price' | 'duration' | 'departure'>('price');
   const [showFilters, setShowFilters] = useState(false);
+
+  const handleFilterChange = (filteredFlights: typeof mockFlights) => {
+    setFlights(filteredFlights);
+  };
 
   // Get search parameters
   const from = searchParams.get('from') || '';
@@ -101,7 +106,7 @@ const SearchPage = () => {
         <div className="flex gap-6">
           {/* Filters Sidebar */}
           <div className={`${showFilters ? 'block' : 'hidden'} lg:block w-full lg:w-80 flex-shrink-0`}>
-            <SearchFilters />
+            <SearchFilters onFilterChange={handleFilterChange} />
           </div>
 
           {/* Results */}
