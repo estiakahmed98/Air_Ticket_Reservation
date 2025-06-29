@@ -1,24 +1,27 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { 
-  User, 
-  signInWithEmailAndPassword, 
-  createUserWithEmailAndPassword, 
-  signOut, 
+import {
+  User,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
   onAuthStateChanged,
   GoogleAuthProvider,
-  signInWithPopup
+  signInWithPopup,
 } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
+import { useRouter } from 'next/navigation';
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  login: (email: string, password: string) => Promise<void>;
-  signup: (email: string, password: string) => Promise<void>;
-  loginWithGoogle: () => Promise<void>;
+  login: (email: string, password: string, redirectTo?: string) => Promise<void>;
+  signup: (email: string, password: string, redirectTo?: string) => Promise<void>;
+  loginWithGoogle: (redirectTo?: string) => Promise<void>;
   logout: () => Promise<void>;
+  redirectAfterLogin: string | null;
+  clearRedirect: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -34,40 +37,71 @@ export const useAuth = () => {
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [redirectAfterLogin, setRedirectAfterLogin] = useState<string | null>(
+    () => typeof window !== 'undefined' ? localStorage.getItem('redirectAfterLogin') : null
+  );
+  const router = useRouter();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
       setLoading(false);
+
+      if (user && redirectAfterLogin) {
+        router.push(redirectAfterLogin);
+        localStorage.removeItem('redirectAfterLogin');
+        setRedirectAfterLogin(null);
+      }
     });
 
     return unsubscribe;
-  }, []);
+  }, [redirectAfterLogin, router]);
 
-  const login = async (email: string, password: string) => {
+  const login = async (email: string, password: string, redirectTo?: string) => {
+    if (redirectTo) {
+      localStorage.setItem('redirectAfterLogin', redirectTo);
+      setRedirectAfterLogin(redirectTo);
+    }
     await signInWithEmailAndPassword(auth, email, password);
   };
 
-  const signup = async (email: string, password: string) => {
+  const signup = async (email: string, password: string, redirectTo?: string) => {
+    if (redirectTo) {
+      localStorage.setItem('redirectAfterLogin', redirectTo);
+      setRedirectAfterLogin(redirectTo);
+    }
     await createUserWithEmailAndPassword(auth, email, password);
   };
 
-  const loginWithGoogle = async () => {
+  const loginWithGoogle = async (redirectTo?: string) => {
+    if (redirectTo) {
+      localStorage.setItem('redirectAfterLogin', redirectTo);
+      setRedirectAfterLogin(redirectTo);
+    }
     const provider = new GoogleAuthProvider();
     await signInWithPopup(auth, provider);
   };
 
   const logout = async () => {
     await signOut(auth);
+    setRedirectAfterLogin(null);
+    localStorage.removeItem('redirectAfterLogin');
   };
 
-  const value = {
+  const clearRedirect = () => {
+    setRedirectAfterLogin(null);
+    localStorage.removeItem('redirectAfterLogin');
+  };
+
+  const value: AuthContextType = {
     user,
     loading,
     login,
     signup,
     loginWithGoogle,
     logout,
+    redirectAfterLogin,
+    clearRedirect,
   };
 
   return (

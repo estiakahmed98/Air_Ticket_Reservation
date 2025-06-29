@@ -5,47 +5,25 @@ import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Star, MapPin } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
+import { packages } from '@/lib/mockData';
 
-const packages = [
-  {
-    id: 1,
-    title: 'Bali Adventure',
-    location: 'Bali, Indonesia',
-    image: 'https://images.pexels.com/photos/2166559/pexels-photo-2166559.jpeg?auto=compress&cs=tinysrgb&w=400',
-    price: 899,
-    rating: 4.8,
-    duration: '7 days'
-  },
-  {
-    id: 2,
-    title: 'Tokyo Explorer',
-    location: 'Tokyo, Japan',
-    image: 'https://images.pexels.com/photos/2506923/pexels-photo-2506923.jpeg?auto=compress&cs=tinysrgb&w=400',
-    price: 1299,
-    rating: 4.9,
-    duration: '5 days'
-  },
-  {
-    id: 3,
-    title: 'Santorini Escape',
-    location: 'Santorini, Greece',
-    image: 'https://images.pexels.com/photos/1285625/pexels-photo-1285625.jpeg?auto=compress&cs=tinysrgb&w=400',
-    price: 1599,
-    rating: 4.7,
-    duration: '6 days'
-  },
-  {
-    id: 4,
-    title: 'Dubai Luxury',
-    location: 'Dubai, UAE',
-    image: 'https://images.pexels.com/photos/1470502/pexels-photo-1470502.jpeg?auto=compress&cs=tinysrgb&w=400',
-    price: 2199,
-    rating: 4.9,
-    duration: '4 days'
-  }
-];
 
 const PopularPackages = () => {
+  const router = useRouter();
+  const { user } = useAuth();
+
+  const handleBook = (id: number) => {
+    const redirectUrl = `/packages-booking?packageId=${id}`;
+    if (!user) {
+      localStorage.setItem('redirectAfterLogin', redirectUrl);
+      router.push('/login');
+    } else {
+      router.push(redirectUrl);
+    }
+  };
+
   return (
     <section className="py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -82,7 +60,7 @@ const PopularPackages = () => {
                     <span className="text-2xl font-bold text-blue-600">${pkg.price}</span>
                     <span className="text-sm text-gray-600 ml-1">/ {pkg.duration}</span>
                   </div>
-                  <Button size="sm" className="bg-red-500 hover:bg-red-600">
+                  <Button size="sm" className="bg-red-500 hover:bg-red-600" onClick={() => handleBook(pkg.id)}>
                     Book Now
                   </Button>
                 </div>
