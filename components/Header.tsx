@@ -25,9 +25,6 @@ const Header = () => {
             <Link href="/search" className="text-gray-700 hover:text-blue-600 transition-colors">
               Flights
             </Link>
-            <Link href="/hotels" className="text-gray-700 hover:text-blue-600 transition-colors">
-              Hotels
-            </Link>
             <Link href="/packages" className="text-gray-700 hover:text-blue-600 transition-colors">
               Packages
             </Link>
